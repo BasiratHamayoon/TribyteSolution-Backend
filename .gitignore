@@ -1,0 +1,13 @@
+.env
+node_modules
+dist
+build
+coverage
+*.log
+*.tsbuildinfo
+.DS_Store
+.idea
+.vscode
+*.iml
+*.suo
+*.ntvs*
