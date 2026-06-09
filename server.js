@@ -7,15 +7,15 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     await connectDB();
-    
+
     app.listen(PORT, () => {
       console.log(`
- 
-     SanzyLimited Backend Started!          
-     Server: http://localhost:${PORT}       
-     API:    http://localhost:${PORT}/api   
-     Mode:   ${process.env.NODE_ENV || 'development'}            
-  
+
+  TribyteSolutions Backend Started!
+  Server: http://localhost:${PORT}
+  API:    http://localhost:${PORT}/api
+  Mode:   ${process.env.NODE_ENV || 'development'}
+
       `);
     });
   } catch (error) {

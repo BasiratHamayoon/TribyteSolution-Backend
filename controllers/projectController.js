@@ -185,30 +185,30 @@ exports.updateProject = async (req, res) => {
       removeImage 
     } = req.body;
 
-    
-    let parsedTechStack = techStack;
-    if (typeof techStack === 'string') {
-      try {
-        parsedTechStack = JSON.parse(techStack);
-      } catch {
-        parsedTechStack = techStack.split(',').map(t => t.trim()).filter(Boolean);
+    let parsedTechStack = project.techStack;
+    if (techStack !== undefined && techStack !== null) {
+      if (typeof techStack === 'string') {
+        try {
+          const parsed = JSON.parse(techStack);
+          parsedTechStack = Array.isArray(parsed) ? parsed : [];
+        } catch {
+          parsedTechStack = techStack.split(',').map(t => t.trim()).filter(Boolean);
+        }
+      } else if (Array.isArray(techStack)) {
+        parsedTechStack = techStack;
       }
     }
 
-    
     let image = project.image;
-    
-    
+
     if (req.file) {
-      
       if (project.image) {
         const oldFilename = getFilenameFromUrl(project.image);
         deleteFile(path.join('uploads/projects', oldFilename));
       }
       image = getFileUrl(req.file.filename, 'projects');
     }
-    
-    
+
     if (removeImage === 'true' || removeImage === true) {
       if (project.image) {
         const oldFilename = getFilenameFromUrl(project.image);
@@ -226,7 +226,7 @@ exports.updateProject = async (req, res) => {
         tag: tag !== undefined ? tag : project.tag,
         description: description || project.description,
         fullDescription: fullDescription !== undefined ? fullDescription : project.fullDescription,
-        techStack: parsedTechStack || project.techStack,
+        techStack: parsedTechStack,
         image,
         liveLink: liveLink !== undefined ? liveLink : project.liveLink,
         githubLink: githubLink !== undefined ? githubLink : project.githubLink
